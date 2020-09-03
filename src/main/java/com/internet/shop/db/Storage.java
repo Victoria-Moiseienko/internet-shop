@@ -9,7 +9,7 @@ public class Storage {
     private static Long productId = 0L;
 
     public static void addProduct(Product product) {
-        product.setId(++productId);
+        product.setId(productId++);
         products.add(product);
     }
 }

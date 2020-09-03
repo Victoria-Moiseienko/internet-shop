@@ -24,10 +24,11 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product update(Product product) {
-        Product currentProduct = get(product.getId()).get();
-        currentProduct.setName(product.getName());
-        currentProduct.setPrice(product.getPrice());
-        return currentProduct;
+        getAllProducts().stream()
+                .filter(prod -> prod.getId().equals(product.getId()))
+                .forEach(prod -> prod = product);
+
+        return product;
     }
 
     @Override
