@@ -27,6 +27,5 @@ public class Application {
         for (Product prod : productList) {
             System.out.println(prod);
         }
-
     }
 }
