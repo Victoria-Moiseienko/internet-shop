@@ -24,4 +24,8 @@ public class Order {
     public Object getUserId() {
         return userId;
     }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
