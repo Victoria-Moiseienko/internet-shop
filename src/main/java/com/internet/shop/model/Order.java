@@ -12,4 +12,20 @@ public class Order {
         this.products = new ArrayList<>();
         this.userId = userId;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Object getId() {
+        return id;
+    }
+
+    public Object getUserId() {
+        return userId;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
