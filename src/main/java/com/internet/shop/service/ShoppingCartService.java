@@ -4,8 +4,8 @@ import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import java.util.List;
 
-
 public interface ShoppingCartService {
+
     ShoppingCart create(ShoppingCart shoppingCart);
 
     ShoppingCart update(ShoppingCart shoppingCart);

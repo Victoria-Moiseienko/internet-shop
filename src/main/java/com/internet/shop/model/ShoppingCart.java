@@ -28,4 +28,13 @@ public class ShoppingCart {
     public List<Product> getProducts() {
         return products;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{"
+                + "id=" + id
+                + ", products=" + products.toString()
+                + ", userId=" + userId
+                + '}';
+    }
 }

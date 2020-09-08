@@ -8,8 +8,6 @@ import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 
-import java.util.List;
-
 public class Application {
     private static Injector injector = Injector.getInstance("com.internet.shop");
 
@@ -27,19 +25,9 @@ public class Application {
         productService.create(pear);
         productService.create(plum);
 
-        productService.delete(apple.getId());
-
-        Product product = productService.get(pear.getId());
-        product.setPrice(32);
-        productService.update(product);
-
-        List<Product> productList = productService.getAllProducts();
-        for (Product prod : productList) {
-            System.out.println(prod);
-        }
-
         UserService userService = (UserService) injector.getInstance(UserService.class);
-        ShoppingCartService shoppingCartService = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
         userService.create(user1);
         ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
@@ -51,6 +39,17 @@ public class Application {
         ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
         shoppingCartService.create(shoppingCart2);
 
+        System.out.println("User and empty shopping cart:");
+        System.out.println(user2);
+        System.out.println(shoppingCartService.getByUserId(user2.getId()));
+
+        System.out.println("\nUser and shopping cart:");
         System.out.println(user1);
+        System.out.println(shoppingCartService.getByUserId(user1.getId()));
+
+        shoppingCartService.deleteProduct(shoppingCart1, pear);
+        System.out.println("\nUser and updated shopping cart:");
+        System.out.println(user1);
+        System.out.println(shoppingCartService.getByUserId(user1.getId()));
     }
 }
