@@ -10,6 +10,7 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
+        <th></th>
     </tr>
     <c:forEach var="user" items="${users}">
         <tr>
@@ -18,6 +19,9 @@
             </td>
             <td>
                 <c:out value="${user.name}"/>
+            </td>
+            <td>
+                <button type="submit">delete</button>
             </td>
         </tr>
     </c:forEach>
