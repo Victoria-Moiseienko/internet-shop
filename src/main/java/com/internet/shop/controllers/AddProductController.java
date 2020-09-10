@@ -13,22 +13,23 @@ import javax.servlet.http.HttpServletResponse;
 public class AddProductController extends HttpServlet {
     @Inject
     private static Injector injector = Injector.getInstance("com.internet.shop");
-    ProductService productService = (ProductService) injector.getInstance(ProductService.class);
+    private final ProductService productService
+            = (ProductService) injector.getInstance(ProductService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/products/addProduct.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/products/add.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String productName = req.getParameter("productname");
+        String productName = req.getParameter("productName");
         String price = req.getParameter("price");
         productService.create(new Product(productName, Double.parseDouble(price)));
 
         req.setAttribute("message", productName + " was added");
-        req.getRequestDispatcher("/WEB-INF/views/products/addProduct.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/products/add.jsp").forward(req,resp);
     }
 }

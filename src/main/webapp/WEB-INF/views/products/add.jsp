@@ -6,8 +6,8 @@
 <body>
 <h5 style="color: grey">${message}</h5>
 <h1>Please, provide new product details</h1>
-<form method="post" action="${pageContext.request.contextPath}/products/addproduct">
-    Product Name:<input type="text" name="productname">
+<form method="post" action="${pageContext.request.contextPath}/products/add">
+    Product Name:<input type="text" name="productName">
     Price:<input type="number" name="price">
     <button type="submit">Add</button>
 </form>

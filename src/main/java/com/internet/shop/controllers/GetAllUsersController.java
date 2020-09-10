@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserController extends HttpServlet {
+public class GetAllUsersController extends HttpServlet {
     @Inject
     private static Injector injector = Injector.getInstance("com.internet.shop");
     UserService userService = (UserService) injector.getInstance(UserService.class);
