@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>all users page</h1>
+<h4>${message}</h4>
 <table border="1">
     <tr>
         <th>Id</th>
@@ -21,7 +22,7 @@
                 <c:out value="${user.name}"/>
             </td>
             <td>
-                <button type="submit">delete</button>
+                <a href="${pageContext.request.contextPath}/users/delete?userId=${user.id}">delete</a>
             </td>
         </tr>
     </c:forEach>

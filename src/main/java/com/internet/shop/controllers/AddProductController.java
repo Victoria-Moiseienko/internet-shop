@@ -26,7 +26,6 @@ public class AddProductController extends HttpServlet {
             throws ServletException, IOException {
         String productName = req.getParameter("productname");
         String price = req.getParameter("price");
-        System.out.println(productName + " " + price);
         productService.create(new Product(productName, Double.parseDouble(price)));
 
         req.setAttribute("message", productName + " was added");

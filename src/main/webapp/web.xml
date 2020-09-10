@@ -21,7 +21,7 @@
 
     <servlet-mapping>
         <servlet-name>allUsers</servlet-name>
-        <url-pattern>/users/all</url-pattern>
+        <url-pattern>/users/allusers</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -31,7 +31,7 @@
 
     <servlet-mapping>
         <servlet-name>registration</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <url-pattern>/users/registration</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -41,7 +41,7 @@
 
     <servlet-mapping>
         <servlet-name>addproduct</servlet-name>
-        <url-pattern>/addproduct</url-pattern>
+        <url-pattern>/products/addproduct</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -51,7 +51,34 @@
 
     <servlet-mapping>
         <servlet-name>showproduct</servlet-name>
-        <url-pattern>/showproduct</url-pattern>
+        <url-pattern>/products/showproducts</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>shoppingcart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.ShoppingCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>shoppingcart</servlet-name>
+        <url-pattern>/carts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>com.internet.shop.controllers.DeleteUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/users/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addProductToCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.AddProductToCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addProductToCart</servlet-name>
+        <url-pattern>/carts/addProduct</url-pattern>
+    </servlet-mapping>
 </web-app>

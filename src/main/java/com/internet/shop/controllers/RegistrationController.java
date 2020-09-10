@@ -2,7 +2,9 @@ package com.internet.shop.controllers;
 
 import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Injector;
+import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
+import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -14,11 +16,13 @@ public class RegistrationController extends HttpServlet {
     @Inject
     private static Injector injector = Injector.getInstance("com.internet.shop");
     UserService userService = (UserService) injector.getInstance(UserService.class);
+    ShoppingCartService shoppingCartService =
+            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
     }
 
     @Override
@@ -29,14 +33,14 @@ public class RegistrationController extends HttpServlet {
         String passwordRepeat = req.getParameter("pwd-repeat");
 
         if (password.equals(passwordRepeat)) {
-            userService.create(new User("", login, password));
-            //redirect to main
+            User user = new User(login, login, password);
+            userService.create(user);
+            ShoppingCart shoppingCart = new ShoppingCart(user.getId());
+            shoppingCartService.create(shoppingCart);
             resp.sendRedirect(req.getContextPath() + "/");
-            //TODO: add login to page
         } else {
-            //show correct data message
             req.setAttribute("message", "password and repeat password are not equal");
-            req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req,resp);
         }
     }
 }
