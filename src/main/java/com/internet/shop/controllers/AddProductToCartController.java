@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 public class AddProductToCartController extends HttpServlet {
     private static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private ShoppingCartService shoppingCartService =
+    private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-    private ProductService productService =
+    private final ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
 
     @Override
@@ -26,7 +26,6 @@ public class AddProductToCartController extends HttpServlet {
 
         shoppingCartService.addProduct(shoppingCart, productService.get(productId));
 
-        req.setAttribute("products", shoppingCart.getProducts());
-        req.getRequestDispatcher("/WEB-INF/views/carts/shoppingCart.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

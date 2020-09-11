@@ -1,6 +1,5 @@
 package com.internet.shop.controllers;
 
-import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
 import com.internet.shop.service.ProductService;
@@ -12,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ShowAllProductsController extends HttpServlet {
-
-    @Inject
-    private static Injector injector = Injector.getInstance("com.internet.shop");
-    private static ProductService productService =
+    private static final Injector injector = Injector.getInstance("com.internet.shop");
+    private final ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
 
     @Override
