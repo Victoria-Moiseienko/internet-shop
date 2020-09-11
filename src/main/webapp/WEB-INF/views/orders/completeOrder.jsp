@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Insert Data</title>
+    <title>Complete order</title>
 </head>
 <body>
 <table>
@@ -13,9 +13,8 @@
         <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
     </tr>
 </table>
+<h1>Order confirmed</h1>
 
-<form method="post" action="${pageContext.request.contextPath}/insertdata">
-    <button type="submit">Insert Data</button>
-</form>
 </body>
 </html>
+

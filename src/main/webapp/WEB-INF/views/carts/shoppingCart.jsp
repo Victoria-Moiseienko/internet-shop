@@ -15,6 +15,7 @@
     </tr>
 </table>
 <h1>Shopping Cart</h1>
+<h4 style="color: red">${message}</h4>
 <table border="1">
     <tr>
         <th>id</th>
@@ -32,8 +33,15 @@
             <td>
                 <c:out value="${product.price}"/>
             </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/carts/product/delete?productId=${product.id}">delete</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
+
+<form method="post" action="${pageContext.request.contextPath}/orders/create">
+    <button type="submit">Confirm order</button>
+</form>
 </body>
 </html>

@@ -49,6 +49,5 @@ public class InsertDataController extends HttpServlet {
         productService.create(product3);
 
         resp.sendRedirect(req.getContextPath() + "/");
-
     }
 }
