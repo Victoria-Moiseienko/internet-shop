@@ -4,6 +4,15 @@
     <title>Registration</title>
 </head>
 <body>
+<table>
+    <tr>
+        <th><a href="${pageContext.request.contextPath}/users/registration">Registration</a></th>
+        <th><a href="${pageContext.request.contextPath}/users/all">User list</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/add">Add product</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/showproducts">Product list</a></th>
+        <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
+    </tr>
+</table>
 <h1>Hello. Please, provide your users details</h1>
 <h4 style="color: red">${message}</h4>
 <form method="post" action="${pageContext.request.contextPath}/users/registration">

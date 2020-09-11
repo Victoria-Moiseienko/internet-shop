@@ -1,8 +1,14 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>>
+<%--
+  Created by IntelliJ IDEA.
+  User: victo
+  Date: 11.09.2020
+  Time: 14:02
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Shopping Cart</title>
+    <title>Insert Data</title>
 </head>
 <body>
 <table>
@@ -14,26 +20,9 @@
         <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
     </tr>
 </table>
-<h1>Shopping Cart</h1>
-<table border="1">
-    <tr>
-        <th>id</th>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    <c:forEach var="product" items="${products}">
-        <tr>
-            <td>
-                <c:out value="${product.id}"/>
-            </td>
-            <td>
-                <c:out value="${product.name}"/>
-            </td>
-            <td>
-                <c:out value="${product.price}"/>
-            </td>
-        </tr>
-    </c:forEach>
-</table>
+
+<form method="post" action="${pageContext.request.contextPath}/insertdata">
+    <button type="submit">Insert Data</button>
+</form>
 </body>
 </html>

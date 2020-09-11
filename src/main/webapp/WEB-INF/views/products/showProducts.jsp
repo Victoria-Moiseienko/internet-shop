@@ -5,6 +5,15 @@
     <title>Products</title>
 </head>
 <body>
+<table>
+    <tr>
+        <th><a href="${pageContext.request.contextPath}/users/registration">Registration</a></th>
+        <th><a href="${pageContext.request.contextPath}/users/all">User list</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/add">Add product</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/showproducts">Product list</a></th>
+        <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
+    </tr>
+</table>
 <h1>all products page</h1>
 <table border="1">
     <tr>
