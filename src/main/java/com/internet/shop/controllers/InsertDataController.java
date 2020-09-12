@@ -15,12 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InsertDataController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private static final Product product1 = new Product("apple", 25.5);
-    private static final Product product2 = new Product("pear", 35.5);
-    private static final Product product3 = new Product("plum", 20);
-    private static final User user1 = new User("Vasil", "fruitlover", "qwerty");
-    private static final User user2 = new User("Maria", "mariafruit", "asdfgh");
-
     private final UserService userService = (UserService) injector.getInstance(UserService.class);
     private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
@@ -36,6 +30,9 @@ public class InsertDataController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        User user1 = new User("Vasil", "fruitlover", "qwerty");
+        User user2 = new User("Maria", "mariafruit", "asdfgh");
+
         userService.create(user1);
         ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
         shoppingCartService.create(shoppingCart1);
@@ -43,6 +40,10 @@ public class InsertDataController extends HttpServlet {
         userService.create(user2);
         ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
         shoppingCartService.create(shoppingCart2);
+
+        Product product1 = new Product("apple", 25.5);
+        Product product2 = new Product("pear", 35.5);
+        Product product3 = new Product("plum", 20);
 
         productService.create(product1);
         productService.create(product2);
