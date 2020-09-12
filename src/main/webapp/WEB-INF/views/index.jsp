@@ -10,7 +10,10 @@
         <th><a href="${pageContext.request.contextPath}/users/all">User list</a></th>
         <th><a href="${pageContext.request.contextPath}/products/add">Add product</a></th>
         <th><a href="${pageContext.request.contextPath}/products/showproducts">Product list</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/admin">Product list Admin</a></th>
         <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
+        <th><a href="${pageContext.request.contextPath}/orders/user">Orders</a></th>
+        <th><a href="${pageContext.request.contextPath}/orders/admin">Orders Admin</a></th>
         <th><a href="${pageContext.request.contextPath}/insertdata">Insert Data</a></th>
     </tr>
 </table>
