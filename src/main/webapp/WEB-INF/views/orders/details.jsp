@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All users</title>
+    <title>Order details</title>
 </head>
 <body>
 <table>
@@ -18,24 +18,23 @@
         <th><a href="${pageContext.request.contextPath}/insertdata">Insert Data</a></th>
     </tr>
 </table>
-<h1>all users page</h1>
-<h4>${message}</h4>
+<h1>order details page</h1>
 <table border="1">
     <tr>
         <th>Id</th>
         <th>Name</th>
-        <th></th>
+        <th>Price</th>
     </tr>
-    <c:forEach var="user" items="${users}">
+    <c:forEach var="product" items="${products}">
         <tr>
             <td>
-                <c:out value="${user.id}"/>
+                <c:out value="${product.id}"/>
             </td>
             <td>
-                <c:out value="${user.name}"/>
+                <c:out value="${product.name}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/users/delete?userId=${user.id}">delete</a>
+                <c:out value="${product.price}"/>
             </td>
         </tr>
     </c:forEach>

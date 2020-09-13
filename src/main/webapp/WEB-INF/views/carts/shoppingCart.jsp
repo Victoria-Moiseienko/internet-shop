@@ -10,11 +10,16 @@
         <th><a href="${pageContext.request.contextPath}/users/registration">Registration</a></th>
         <th><a href="${pageContext.request.contextPath}/users/all">User list</a></th>
         <th><a href="${pageContext.request.contextPath}/products/add">Add product</a></th>
-        <th><a href="${pageContext.request.contextPath}/products/showproducts">Product list</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/all">Product list</a></th>
+        <th><a href="${pageContext.request.contextPath}/products/admin/all">Product list Admin</a></th>
         <th><a href="${pageContext.request.contextPath}/carts">Shopping cart</a></th>
+        <th><a href="${pageContext.request.contextPath}/orders/user">Orders</a></th>
+        <th><a href="${pageContext.request.contextPath}/orders/admin">Orders Admin</a></th>
+        <th><a href="${pageContext.request.contextPath}/insertdata">Insert Data</a></th>
     </tr>
 </table>
 <h1>Shopping Cart</h1>
+<h4 style="color: red">${message}</h4>
 <table border="1">
     <tr>
         <th>id</th>
@@ -32,8 +37,15 @@
             <td>
                 <c:out value="${product.price}"/>
             </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/carts/product/delete?productId=${product.id}">delete</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
+
+<form method="post" action="${pageContext.request.contextPath}/orders/create">
+    <button type="submit">Confirm order</button>
+</form>
 </body>
 </html>

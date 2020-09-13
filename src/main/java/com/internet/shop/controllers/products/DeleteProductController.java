@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShowAllProductsController extends HttpServlet {
+public class DeleteProductController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
@@ -18,9 +18,14 @@ public class ShowAllProductsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Product> allProducts = productService.getAll();
+        Long id = Long.valueOf(req.getParameter("productId"));
+        String deletedProductName = productService.get(id).getName();
+        productService.delete(id);
 
+        List<Product> allProducts = productService.getAll();
+        req.setAttribute("message", deletedProductName + " was deleted");
         req.setAttribute("products", allProducts);
-        req.getRequestDispatcher("/WEB-INF/views/products/showProducts.jsp").forward(req, resp);
+        req.getRequestDispatcher(
+                "/WEB-INF/views/products/allProductsAdmin.jsp").forward(req, resp);
     }
 }

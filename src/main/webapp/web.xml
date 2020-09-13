@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
     http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
     version="3.1">
-    
+
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>com.internet.shop.controllers.IndexController</servlet-class>
@@ -15,8 +15,144 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>insertData</servlet-name>
+        <servlet-class>com.internet.shop.controllers.InsertDataController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>insertData</servlet-name>
+        <url-pattern>/insertdata</url-pattern>
+    </servlet-mapping>
+
+ <!-- CARTS -->
+    <servlet>
+        <servlet-name>shoppingcart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.carts.GetCartProductsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>shoppingcart</servlet-name>
+        <url-pattern>/carts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addProductToCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.carts.AddProductToCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addProductToCart</servlet-name>
+        <url-pattern>/carts/product/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteProductFromCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.carts.DeleteProductFromCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteProductFromCart</servlet-name>
+        <url-pattern>/carts/product/delete</url-pattern>
+    </servlet-mapping>
+
+    <!-- ORDERS -->
+    <servlet>
+        <servlet-name>createOrder</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.CreateOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createOrder</servlet-name>
+        <url-pattern>/orders/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>confirmOrder</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.ConfirmOrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>confirmOrder</servlet-name>
+        <url-pattern>/orders/confirm</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getUserOrders</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.GetUserOrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getUserOrders</servlet-name>
+        <url-pattern>/orders/user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getOrderDetails</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.GetOrderDetailsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getOrderDetails</servlet-name>
+        <url-pattern>/orders/details</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getAllOrdersAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.GetAllOrdersAdminController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getAllOrdersAdmin</servlet-name>
+        <url-pattern>/orders/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteOrderAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.orders.DeleteOrderAdminController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteOrderAdmin</servlet-name>
+        <url-pattern>/orders/delete</url-pattern>
+    </servlet-mapping>
+
+    <!-- PRODUCTS -->
+    <servlet>
+        <servlet-name>addProduct</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.AddProductController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>addProduct</servlet-name>
+        <url-pattern>/products/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allProduct</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.GetAllProductsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>allProduct</servlet-name>
+        <url-pattern>/products/all</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allProductAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.AdminProductController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>allProductAdmin</servlet-name>
+        <url-pattern>/products/admin/all</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteProduct</servlet-name>
+        <servlet-class>com.internet.shop.controllers.products.DeleteProductController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteProduct</servlet-name>
+        <url-pattern>/products/delete</url-pattern>
+    </servlet-mapping>
+
+    <!-- USERS -->
+    <servlet>
         <servlet-name>allUsers</servlet-name>
-        <servlet-class>com.internet.shop.controllers.GetAllUsersController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.GetAllUsersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +162,7 @@
 
     <servlet>
         <servlet-name>registration</servlet-name>
-        <servlet-class>com.internet.shop.controllers.RegistrationController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.RegistrationController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -35,50 +171,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>addproduct</servlet-name>
-        <servlet-class>com.internet.shop.controllers.AddProductController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>addproduct</servlet-name>
-        <url-pattern>/products/add</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>showproduct</servlet-name>
-        <servlet-class>com.internet.shop.controllers.ShowAllProductsController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>showproduct</servlet-name>
-        <url-pattern>/products/showproducts</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>shoppingcart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.GetCartProductsController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>shoppingcart</servlet-name>
-        <url-pattern>/carts</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>deleteUser</servlet-name>
-        <servlet-class>com.internet.shop.controllers.DeleteUserController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.users.DeleteUserController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/users/delete</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>addProductToCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.AddProductToCartController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>addProductToCart</servlet-name>
-        <url-pattern>/carts/addproduct</url-pattern>
-    </servlet-mapping>
 </web-app>

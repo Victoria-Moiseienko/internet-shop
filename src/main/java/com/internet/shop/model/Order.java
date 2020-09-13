@@ -28,4 +28,8 @@ public class Order {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
 }
