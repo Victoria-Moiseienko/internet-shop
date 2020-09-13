@@ -5,7 +5,6 @@ import com.internet.shop.model.Product;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,10 +26,6 @@ public class DeleteProductFromCartController extends HttpServlet {
         shoppingCartService.deleteProduct(shoppingCartService.getByUserId(USER_ID),
                 product);
 
-        List<Product> productsInCart =
-                shoppingCartService.getByUserId(USER_ID).getProducts();
-
-        req.setAttribute("products", productsInCart);
-        req.getRequestDispatcher("/WEB-INF/views/carts/shoppingCart.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/carts");
     }
 }
