@@ -29,6 +29,6 @@ public class CreateOrderController extends HttpServlet {
         }
 
         orderService.completeOrder(shoppingCart);
-        resp.sendRedirect(req.getContextPath() + "/orders/confirm");
+        req.getRequestDispatcher("/WEB-INF/views/orders/confirmOrder.jsp").forward(req, resp);
     }
 }

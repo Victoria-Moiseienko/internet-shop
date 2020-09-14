@@ -15,13 +15,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>insertData</servlet-name>
+        <servlet-name>inject</servlet-name>
         <servlet-class>com.internet.shop.controllers.InsertDataController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>insertData</servlet-name>
-        <url-pattern>/insertdata</url-pattern>
+        <servlet-name>inject</servlet-name>
+        <url-pattern>/inject</url-pattern>
     </servlet-mapping>
 
  <!-- CARTS -->
@@ -32,7 +32,7 @@
 
     <servlet-mapping>
         <servlet-name>shoppingcart</servlet-name>
-        <url-pattern>/carts</url-pattern>
+        <url-pattern>/shopping-cart/info</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -41,7 +41,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addProductToCart</servlet-name>
-        <url-pattern>/carts/product/add</url-pattern>
+        <url-pattern>/shopping-cart/products/add</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -50,7 +50,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteProductFromCart</servlet-name>
-        <url-pattern>/carts/product/delete</url-pattern>
+        <url-pattern>/shopping-cart/products/delete</url-pattern>
     </servlet-mapping>
 
     <!-- ORDERS -->
@@ -64,21 +64,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>confirmOrder</servlet-name>
-        <servlet-class>com.internet.shop.controllers.orders.ConfirmOrderController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>confirmOrder</servlet-name>
-        <url-pattern>/orders/confirm</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>getUserOrders</servlet-name>
         <servlet-class>com.internet.shop.controllers.orders.GetUserOrdersController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>getUserOrders</servlet-name>
-        <url-pattern>/orders/user</url-pattern>
+        <url-pattern>/user/orders</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -92,16 +83,16 @@
 
     <servlet>
         <servlet-name>getAllOrdersAdmin</servlet-name>
-        <servlet-class>com.internet.shop.controllers.orders.GetAllOrdersAdminController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.orders.GetAllOrdersController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>getAllOrdersAdmin</servlet-name>
-        <url-pattern>/orders/admin</url-pattern>
+        <url-pattern>/orders</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>deleteOrderAdmin</servlet-name>
-        <servlet-class>com.internet.shop.controllers.orders.DeleteOrderAdminController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.orders.DeleteOrderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteOrderAdmin</servlet-name>
@@ -126,17 +117,17 @@
 
     <servlet-mapping>
         <servlet-name>allProduct</servlet-name>
-        <url-pattern>/products/all</url-pattern>
+        <url-pattern>/products</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>allProductAdmin</servlet-name>
-        <servlet-class>com.internet.shop.controllers.products.AdminProductController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.products.ManageProductController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>allProductAdmin</servlet-name>
-        <url-pattern>/products/admin/all</url-pattern>
+        <url-pattern>/products/manage</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -157,7 +148,7 @@
 
     <servlet-mapping>
         <servlet-name>allUsers</servlet-name>
-        <url-pattern>/users/all</url-pattern>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -187,6 +178,15 @@
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/users/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <servlet-class>com.internet.shop.controllers.users.LoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/users/login</url-pattern>
     </servlet-mapping>
 
     <filter>
