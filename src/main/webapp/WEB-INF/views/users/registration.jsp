@@ -6,15 +6,7 @@
 <body>
 <table>
     <tr>
-        <th><a href="${pageContext.request.contextPath}/users/registration">Registration</a></th>
-        <th><a href="${pageContext.request.contextPath}/users">User list</a></th>
-        <th><a href="${pageContext.request.contextPath}/products/add">Add product</a></th>
-        <th><a href="${pageContext.request.contextPath}/products">Product list</a></th>
-        <th><a href="${pageContext.request.contextPath}/products/manage">Product list Admin</a></th>
-        <th><a href="${pageContext.request.contextPath}/shopping-cart/info">Shopping cart</a></th>
-        <th><a href="${pageContext.request.contextPath}/user/orders">Orders</a></th>
-        <th><a href="${pageContext.request.contextPath}/orders">Orders Admin</a></th>
-        <th><a href="${pageContext.request.contextPath}/inject">Inject</a></th>
+        <th><a href="${pageContext.request.contextPath}/login">Login</a></th>
     </tr>
 </table>
 <h1>Hello. Please, provide your users details</h1>
