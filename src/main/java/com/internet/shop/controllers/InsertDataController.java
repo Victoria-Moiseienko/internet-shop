@@ -2,12 +2,14 @@ package com.internet.shop.controllers;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
+import com.internet.shop.model.Role;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,15 +33,20 @@ public class InsertDataController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User user1 = new User("Vasil", "fruitlover", "qwerty");
-        User user2 = new User("Maria", "mariafruit", "asdfgh");
-
         userService.create(user1);
+        user1.setRoles(Set.of(new Role(Role.RoleName.USER)));
         ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
         shoppingCartService.create(shoppingCart1);
 
+        User user2 = new User("Maria", "mariafruit", "asdfgh");
         userService.create(user2);
+        user2.setRoles(Set.of(new Role(Role.RoleName.USER)));
         ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
         shoppingCartService.create(shoppingCart2);
+
+        User user3 = new User("Admin", "admin", "admin");
+        userService.create(user3);
+        user3.setRoles(Set.of(new Role(Role.RoleName.ADMIN)));
 
         Product product1 = new Product("apple", 25.5);
         Product product2 = new Product("pear", 35.5);

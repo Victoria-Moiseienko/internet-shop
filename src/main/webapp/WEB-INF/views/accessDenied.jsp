@@ -1,8 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Products</title>
+    <title>Access Denied</title>
 </head>
 <body>
 <table>
@@ -21,32 +20,6 @@
         <th><a href="${pageContext.request.contextPath}/logout"> Logout </a></th>
     </tr>
 </table>
-<h1>all products page</h1>
-<table border="1">
-    <tr>
-        <th>id</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Buy</th>
-    </tr>
-    <c:forEach var="product" items="${products}">
-        <tr>
-            <td>
-                <c:out value="${product.id}"/>
-            </td>
-            <td>
-                <c:out value="${product.name}"/>
-            </td>
-            <td>
-                <c:out value="${product.price}"/>
-            </td>
-            <td>
-                <a href="${pageContext.request.contextPath}/shopping-cart/products/add?productId=${product.id}"> buy </a>
-            </td>
-
-        </tr>
-    </c:forEach>
-</table>
-<h4>${message}</h4>
+<h1>Sorry. Access Denied</h1>
 </body>
 </html>

@@ -34,7 +34,6 @@ public class AuthenticationFilter implements Filter {
             resp.sendRedirect("/login");
             return;
         }
-
         chain.doFilter(req, resp);
     }
 
