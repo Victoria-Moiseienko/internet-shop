@@ -29,12 +29,10 @@ public class AuthorizationFilter implements Filter {
         protectedUrls.put("/orders", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/products/manage", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/products/add", List.of(Role.RoleName.ADMIN));
-
         protectedUrls.put("/shopping-cart/products/add", List.of(Role.RoleName.USER));
         protectedUrls.put("/shopping-cart/info", List.of(Role.RoleName.USER));
         protectedUrls.put("/orders/create", List.of(Role.RoleName.USER));
         protectedUrls.put("/user/orders", List.of(Role.RoleName.USER));
-        protectedUrls.put("/orders/details", List.of(Role.RoleName.USER));
     }
 
     @Override
@@ -48,10 +46,6 @@ public class AuthorizationFilter implements Filter {
             return;
         }
         Long userId = (Long) req.getSession().getAttribute(USER_ID);
-        if (userId == null) {
-            resp.sendRedirect("/login");
-            return;
-        }
         User user = userService.get(userId);
         if (isAutorized(user, protectedUrls.get(requestedUrl))) {
             filterChain.doFilter(req, resp);

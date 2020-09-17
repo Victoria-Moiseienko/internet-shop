@@ -34,19 +34,19 @@ public class InsertDataController extends HttpServlet {
             throws ServletException, IOException {
         User user1 = new User("Vasil", "fruitlover", "qwerty");
         userService.create(user1);
-        user1.setRoles(Set.of(new Role(Role.RoleName.USER)));
+        user1.setRoles(Set.of(Role.of("USER")));
         ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
         shoppingCartService.create(shoppingCart1);
 
         User user2 = new User("Maria", "mariafruit", "asdfgh");
         userService.create(user2);
-        user2.setRoles(Set.of(new Role(Role.RoleName.USER)));
+        user2.setRoles(Set.of(Role.of("USER")));
         ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
         shoppingCartService.create(shoppingCart2);
 
         User user3 = new User("Admin", "admin", "admin");
         userService.create(user3);
-        user3.setRoles(Set.of(new Role(Role.RoleName.ADMIN)));
+        user3.setRoles(Set.of(Role.of("ADMIN")));
 
         Product product1 = new Product("apple", 25.5);
         Product product2 = new Product("pear", 35.5);
@@ -57,6 +57,5 @@ public class InsertDataController extends HttpServlet {
         productService.create(product3);
 
         resp.sendRedirect(req.getContextPath() + "/");
-
     }
 }
