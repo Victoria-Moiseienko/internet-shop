@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product create(Product item) {
-        String query = "INSERT INTO internet_shop.products (product_name, product_price)"
+        String query = "INSERT INTO products (product_name, product_price)"
                 + " VALUES (? , ?)";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
@@ -39,7 +39,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Optional<Product> get(Long id) {
         String query = "SELECT product_id, product_name, product_price"
-                + " FROM internet_shop.products WHERE product_id = ?";
+                + " FROM products WHERE product_id = ?";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -57,7 +57,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public Product update(Product item) {
-        String query = "UPDATE internet_shop.products"
+        String query = "UPDATE products"
                 + " SET product_name = ?, product_price = ? "
                 + "WHERE product_id = ?";
 
@@ -75,7 +75,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "UPDATE internet_shop.products"
+        String query = "UPDATE products"
                 + " SET deleted = 1 "
                 + "WHERE product_id = ?";
 
@@ -92,7 +92,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public List<Product> getAll() {
         String query = "SELECT product_id, product_name, product_price"
-                + " FROM internet_shop.products WHERE deleted = 0";
+                + " FROM products WHERE deleted = 0";
         List<Product> productList = new ArrayList<>();
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
