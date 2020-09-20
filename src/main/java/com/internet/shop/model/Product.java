@@ -10,6 +10,12 @@ public class Product {
         this.price = price;
     }
 
+    public Product(Long id, String name, Double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
