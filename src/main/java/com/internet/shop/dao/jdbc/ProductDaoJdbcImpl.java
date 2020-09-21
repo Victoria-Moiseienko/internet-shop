@@ -30,7 +30,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 product.setId(resultKey.getLong(1));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Item has not been added", e);
+            throw new DataProcessingException("Product with name " + product.getName()
+                    + " has not been added", e);
         }
         return product;
     }
@@ -68,7 +69,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
             prepareStatement.setLong(4, product.getId());
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Item has not been updated", e);
+            throw new DataProcessingException("Product with id " + product.getId()
+                    + " has not been updated", e);
         }
         return product;
     }
@@ -84,7 +86,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Item has not been deleted", e);
+            throw new DataProcessingException("Product with id =" + id
+                    + " has not been deleted", e);
         }
         return true;
     }
@@ -103,7 +106,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 productList.add(parseRow(sqlResult));
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Items has not been selected", e);
+            throw new DataProcessingException("Products have not been selected", e);
         }
         return productList;
     }
