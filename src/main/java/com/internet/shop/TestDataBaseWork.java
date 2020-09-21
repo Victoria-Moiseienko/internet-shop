@@ -15,6 +15,7 @@ public class TestDataBaseWork {
         //update
         testItem.setPrice(78);
         dao.update(testItem);
+        dao.get(testItem.getId()).ifPresent(product -> System.out.println(product.toString()));
         //delete
         dao.delete(testItem.getId());
         //select all

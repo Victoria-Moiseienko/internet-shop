@@ -15,31 +15,30 @@ import java.util.Optional;
 
 public class ProductDaoJdbcImpl implements ProductDao {
     @Override
-    public Product create(Product item) {
-        String query = "INSERT INTO products (product_name, product_price)"
+    public Product create(Product product) {
+        String query = "INSERT INTO products (name, price)"
                 + " VALUES (? , ?)";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, item.getName());
-            preparedStatement.setDouble(2, item.getPrice());
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.executeUpdate();
             ResultSet resultKey = preparedStatement.getGeneratedKeys();
             if (resultKey.next()) {
-                item.setId(resultKey.getLong(1));
+                product.setId(resultKey.getLong(1));
             }
-
         } catch (SQLException e) {
             throw new DataProcessingException("Item has not been added/n" + e);
         }
-        return item;
+        return product;
     }
 
     @Override
     public Optional<Product> get(Long id) {
-        String query = "SELECT product_id, product_name, product_price"
-                + " FROM products WHERE product_id = ?";
+        String query = "SELECT product_id, name, price"
+                + " FROM products WHERE product_id = ? and deleted = false";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -58,7 +57,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product update(Product item) {
         String query = "UPDATE products"
-                + " SET product_name = ?, product_price = ? "
+                + " SET name = ?, price = ? "
                 + "WHERE product_id = ?";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
@@ -91,7 +90,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        String query = "SELECT product_id, product_name, product_price"
+        String query = "SELECT product_id, name, price"
                 + " FROM products WHERE deleted = 0";
         List<Product> productList = new ArrayList<>();
 
@@ -111,8 +110,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     private Product parseRow(ResultSet sqlResult) throws SQLException {
         Long id = sqlResult.getLong("product_id");
-        String name = sqlResult.getString("product_name");
-        Double price = sqlResult.getDouble("product_price");
+        String name = sqlResult.getString("name");
+        Double price = sqlResult.getDouble("price");
         return new Product(id, name, price);
     }
 }

@@ -14,3 +14,8 @@ ALTER TABLE `internet_shop`.`products`
 ADD COLUMN `deleted` TINYINT NOT NULL DEFAULT 0 AFTER `product_price`;
 ALTER TABLE `internet_shop`.`products`
 CHANGE COLUMN `product_id` `product_id` BIGINT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `internet_shop`.`products`
+CHANGE COLUMN `product_name` `name` VARCHAR(225) NOT NULL ,
+CHANGE COLUMN `product_price` `price` DOUBLE NULL DEFAULT NULL ,
+DROP INDEX `product_name_UNIQUE` ;
