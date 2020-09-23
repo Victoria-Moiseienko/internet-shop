@@ -24,6 +24,10 @@ public class Role {
         return roleName;
     }
 
+    public String getStringRoleName() {
+        return roleName.toString();
+    }
+
     public void setRoleName(RoleName roleName) {
         this.roleName = roleName;
     }
@@ -31,5 +35,13 @@ public class Role {
     public enum RoleName {
         USER,
         ADMIN
+    }
+
+    @Override
+    public String toString() {
+        return "Role{"
+                + "id=" + id
+                + ", roleName=" + roleName
+                + '}';
     }
 }
