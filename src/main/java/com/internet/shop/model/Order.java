@@ -13,15 +13,26 @@ public class Order {
         this.userId = userId;
     }
 
+    public Order(Long id, Long userId, List<Product> productList) {
+        this.id = id;
+        this.products = productList;
+        this.userId = userId;
+    }
+
+    public Order(Long id, Long userId) {
+        this.id = id;
+        this.userId = userId;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Object getId() {
+    public Long getId() {
         return id;
     }
 
-    public Object getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -31,5 +42,14 @@ public class Order {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{"
+                + "id=" + id
+                + ", products=" + products
+                + ", userId=" + userId
+                + '}';
     }
 }
