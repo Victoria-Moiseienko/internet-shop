@@ -13,6 +13,18 @@ public class ShoppingCart {
         this.userId = userId;
     }
 
+    public ShoppingCart(Long id, Long userId, List<Product> productList) {
+        this.id = id;
+        this.userId = userId;
+        this.products = productList;
+    }
+
+    public ShoppingCart(Long id, Long userId) {
+        this.id = id;
+        this.userId = userId;
+        this.products = new ArrayList<>();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -27,6 +39,10 @@ public class ShoppingCart {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override

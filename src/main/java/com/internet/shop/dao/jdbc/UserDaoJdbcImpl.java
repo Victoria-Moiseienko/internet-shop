@@ -23,6 +23,24 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public Optional<User> findByLogin(String login) {
+        String query = String.format(
+                "SELECT *, group_concat(roles.role_name SEPARATOR ',') as role_titles"
+                        + " FROM %s"
+                        + " JOIN %s ON users.user_id = users_roles.user_id"
+                        + " JOIN %s ON users_roles.role_id = roles.role_id"
+                        + " where users.login = ?", TABLE_USERS, TABLE_USERS_ROLES, TABLE_ROLES);
+
+        try (Connection connection = DbConnectionUtil.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, login);
+            ResultSet sqlResult = preparedStatement.executeQuery();
+            if (sqlResult.next()) {
+                User user = parseRow(sqlResult);
+                return Optional.of(user);
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't get user by login = " + login, e);
+        }
         return Optional.empty();
     }
 
@@ -156,7 +174,6 @@ public class UserDaoJdbcImpl implements UserDao {
                 + " JOIN %s ON users_roles.role_id = roles.role_id"
                 + " where users.deleted = false", TABLE_USERS, TABLE_USERS_ROLES, TABLE_ROLES);
         List<User> userList = new ArrayList<>();
-        System.out.println(query);
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet sqlResult = preparedStatement.executeQuery();

@@ -94,19 +94,16 @@ CREATE TABLE `internet_shop`.`orders_products` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE `internet_shop`.`shopping_carts_products` (
-  `shopping_carts_id` BIGINT(11) NOT NULL,
-  `products_id` BIGINT(11) NOT NULL,
-  INDEX `carts_id_fk_idx` (`shopping_carts_id` ASC) VISIBLE,
-  INDEX `products_id_fk_idx` (`products_id` ASC) VISIBLE,
-  CONSTRAINT `carts_id_fk`
-    FOREIGN KEY (`shopping_carts_id`)
-    REFERENCES `internet_shop`.`shopping_carts` (`shopping_carts_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `prods_id_fk`
-    FOREIGN KEY (`products_id`)
-    REFERENCES `internet_shop`.`products` (`product_id`)
+CREATE TABLE `internet_shop`.`shopping_carts` (
+  `shopping_cart_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT(11) NOT NULL,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`shopping_cart_id`),
+  UNIQUE INDEX `shopping_cart_id_UNIQUE` (`shopping_cart_id` ASC) VISIBLE,
+  INDEX `user_id_fk_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `users_id_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `internet_shop`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
