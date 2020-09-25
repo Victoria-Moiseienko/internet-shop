@@ -42,8 +42,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (user_name, password, login)"
-                + " VALUES (?, ?, ?)";
+        String query = "INSERT INTO users (user_name, password, login) VALUES (?, ?, ?)";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -80,8 +79,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private int insertUserRole(Long userId, Long roleId, Connection connection)
             throws SQLException {
-        String query = "INSERT INTO users_roles (user_id, role_id)"
-                + " VALUES (?, ?)";
+        String query = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, userId);
         preparedStatement.setLong(2, roleId);
@@ -95,7 +93,6 @@ public class UserDaoJdbcImpl implements UserDao {
                         + " JOIN users_roles ON users.user_id = users_roles.user_id"
                         + " JOIN roles ON users_roles.role_id = roles.role_id"
                         + " WHERE users.user_id = ?";
-
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
@@ -150,12 +147,11 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setLong(1, id);
-            prepareStatement.executeUpdate();
+            return prepareStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DataProcessingException("User with id " + id
                     + " has not been updated", e);
         }
-        return true;
     }
 
     @Override

@@ -20,9 +20,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public List<Order> getUserOrders(Long userId) {
         String query = "SELECT * FROM orders AS o"
-                        + " JOIN orders_products AS op ON o.order_id = op.orders_id"
-                        + " JOIN products AS p ON p.product_id = op.products_id"
-                        + " WHERE o.user_id = ? AND o.deleted = FALSE ";
+                       + " WHERE o.user_id = ? AND o.deleted = FALSE ";
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -33,6 +31,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 Order order = new Order(id, userId);
                 orderList.add(order);
             }
+            preparedStatement.close();
             for (Order order : orderList) {
                 order.setProducts(extractProductForOrder(order.getId(), connection));
             }
@@ -45,8 +44,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order create(Order order) {
-        String query = "INSERT INTO orders (user_id)"
-                        + " VALUES (?)";
+        String query = "INSERT INTO orders (user_id) VALUES (?)";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -64,17 +62,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
         return order;
     }
 
-    private int insertProducts(Order order, Connection connection) throws SQLException {
-        String query = "INSERT INTO orders_products (orders_id, products_id) "
-                         + "VALUES (?, ?)";
-        int result = 0;
+    private void insertProducts(Order order, Connection connection) throws SQLException {
+        String query = "INSERT INTO orders_products (orders_id, products_id) VALUES (?, ?)";
         for (Product product : order.getProducts()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, order.getId());
             preparedStatement.setLong(2, product.getId());
-            result += preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
-        return result;
     }
 
     @Override
@@ -134,18 +129,16 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setLong(1, id);
-            prepareStatement.executeUpdate();
             deleteProductsFromOrder(id, connection);
+            return prepareStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DataProcessingException("Order with id =" + id
                     + " has not been deleted", e);
         }
-        return true;
     }
 
     private void deleteProductsFromOrder(Long id, Connection connection) throws SQLException {
-        String query = "DELETE FROM orders_products"
-                + " WHERE orders_id = ?";
+        String query = "DELETE FROM orders_products WHERE orders_id = ?";
         PreparedStatement prepareStatement = connection.prepareStatement(query);
         prepareStatement = connection.prepareStatement(query);
         prepareStatement.setLong(1, id);
