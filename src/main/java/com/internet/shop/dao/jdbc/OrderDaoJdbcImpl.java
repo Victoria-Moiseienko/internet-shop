@@ -17,17 +17,12 @@ import java.util.Optional;
 
 @Dao
 public class OrderDaoJdbcImpl implements OrderDao {
-    private static final String TABLE_ORDER = "orders";
-    private static final String TABLE_ORDER_PRODUCT = "orders_products";
-    private static final String TABLE_PRODUCTS = "products";
-
     @Override
     public List<Order> getUserOrders(Long userId) {
-        String query = String.format("SELECT * FROM %s AS o"
-                        + " JOIN %s AS op ON o.order_id = op.orders_id"
-                        + " JOIN %s AS p ON p.product_id = op.products_id"
-                        + " WHERE o.user_id = ? AND o.deleted = false ",
-                TABLE_ORDER, TABLE_ORDER_PRODUCT, TABLE_PRODUCTS);
+        String query = "SELECT * FROM orders AS o"
+                        + " JOIN orders_products AS op ON o.order_id = op.orders_id"
+                        + " JOIN products AS p ON p.product_id = op.products_id"
+                        + " WHERE o.user_id = ? AND o.deleted = false ";
 
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = DbConnectionUtil.getConnection()) {
@@ -51,8 +46,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order create(Order order) {
-        String query = String.format("INSERT INTO %s (user_id)"
-                + " VALUES (?)", TABLE_ORDER);
+        String query = "INSERT INTO orders (user_id)"
+                        + " VALUES (?)";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
@@ -72,8 +67,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
     }
 
     private int insertProducts(Order order, Connection connection) throws SQLException {
-        String query = String.format("INSERT INTO %s (orders_id, products_id) "
-                + "VALUES (?, ?)", TABLE_ORDER_PRODUCT);
+        String query = "INSERT INTO orders_products (orders_id, products_id) "
+                         + "VALUES (?, ?)";
+
         int result = 0;
         for (Product product : order.getProducts()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -86,13 +82,12 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Optional<Order> get(Long id) {
-        String query = String.format("SELECT * FROM %s"
-                        + " JOIN %s ON orders.order_id"
+        String query = "SELECT * FROM orders"
+                        + " JOIN orders_products ON orders.order_id"
                         + " = orders_products.orders_id"
-                        + " JOIN %s ON products.product_id"
+                        + " JOIN products ON products.product_id"
                         + " = orders_products.products_id"
-                        + " where orders.order_id = ? ",
-                TABLE_ORDER, TABLE_ORDER_PRODUCT, TABLE_PRODUCTS);
+                        + " where orders.order_id = ? ";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -127,9 +122,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order update(Order order) {
-        String query = String.format("DELETE FROM %s"
-                        + " WHERE orders_id = ?",
-                TABLE_ORDER_PRODUCT);
+        String query = "DELETE FROM orders_products"
+                        + " WHERE orders_id = ?";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -145,14 +139,12 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = String.format("UPDATE %s"
+        String query = "UPDATE orders"
                         + " SET deleted = true"
-                        + " WHERE order_id = ? and deleted = false",
-                TABLE_ORDER);
+                        + " WHERE order_id = ? and deleted = false";
 
-        String query2 = String.format("DELETE FROM %s"
-                        + " WHERE orders_id = ?",
-                TABLE_ORDER_PRODUCT);
+        String query2 = "DELETE FROM orders_products"
+                        + " WHERE orders_id = ?";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
@@ -170,11 +162,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        String query = String.format("SELECT * FROM %s AS o"
-                        + " JOIN %s AS op ON o.order_id = op.orders_id"
-                        + " JOIN %s AS p ON p.product_id = op.products_id"
-                        + " WHERE o.deleted = false ",
-                TABLE_ORDER, TABLE_ORDER_PRODUCT, TABLE_PRODUCTS);
+        String query = "SELECT * FROM orders AS o"
+                        + " JOIN orders_products AS op ON o.order_id = op.orders_id"
+                        + " JOIN products AS p ON p.product_id = op.products_id"
+                        + " WHERE o.deleted = false ";
 
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = DbConnectionUtil.getConnection()) {
@@ -197,10 +188,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     private List<Product> extractProductForOrder(Long id, Connection connection)
             throws SQLException {
-        String query = String.format("SELECT * FROM %s AS p"
-                        + " JOIN %s AS op ON p.product_id = op.products_id"
-                        + " WHERE op.orders_id = ?",
-                TABLE_PRODUCTS, TABLE_ORDER_PRODUCT);
+        String query = "SELECT * FROM products AS p"
+                        + " JOIN orders_products AS op ON p.product_id = op.products_id"
+                        + " WHERE op.orders_id = ?";
 
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);

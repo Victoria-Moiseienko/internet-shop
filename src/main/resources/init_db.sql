@@ -138,3 +138,7 @@ ADD CONSTRAINT `role_id_fk`
 ADD CONSTRAINT `user_id_fk`
   FOREIGN KEY (`user_id`)
   REFERENCES `internet_shop`.`users` (`user_id`);
+
+  ALTER TABLE `internet_shop`.`orders`
+ADD COLUMN `deleted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `user_id`;
+

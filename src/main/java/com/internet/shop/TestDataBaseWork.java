@@ -1,11 +1,14 @@
 package com.internet.shop;
 
+import com.internet.shop.dao.OrderDao;
 import com.internet.shop.dao.ProductDao;
 import com.internet.shop.dao.ShoppingCartDao;
 import com.internet.shop.dao.UserDao;
+import com.internet.shop.dao.jdbc.OrderDaoJdbcImpl;
 import com.internet.shop.dao.jdbc.ProductDaoJdbcImpl;
 import com.internet.shop.dao.jdbc.ShoppingCartDaoJdbcImpl;
 import com.internet.shop.dao.jdbc.UserDaoJdbcImpl;
+import com.internet.shop.model.Order;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.ShoppingCart;
@@ -79,5 +82,35 @@ public class TestDataBaseWork {
         System.out.println("All:");
         List<ShoppingCart> cartListAll = shoppingCartDao.getAll();
         cartListAll.forEach(System.out::println);
+
+        //ORDER
+        //create
+        testProduct = productDao.get(2L).get();
+
+        Order testOrder = new Order(23L);
+        testOrder.setProducts(List.of(testProduct));
+
+        OrderDao orderDao = new OrderDaoJdbcImpl();
+        orderDao.create(testOrder);
+        //select
+        orderDao.get(testOrder.getId())
+                .ifPresent(order -> System.out.println("Order by ID:\n" + order.toString()));
+        //update
+        Product testProduct2 = productDao.get(1L).get();
+        testOrder.setProducts(List.of(testProduct, testProduct2));
+        orderDao.update(testOrder);
+        orderDao.get(testOrder.getId())
+                .ifPresent(order -> System.out.println(
+                        "Updated order by ID:\n" + order.toString()));
+        //delete
+        orderDao.delete(testOrder.getId());
+        //select all
+        System.out.println("All:");
+        List<Order> orderList = orderDao.getAll();
+        orderList.forEach(System.out::println);
+
+        System.out.println("All for user:");
+        List<Order> orderUserList = orderDao.getUserOrders(23L);
+        orderUserList.forEach(System.out::println);
     }
 }
