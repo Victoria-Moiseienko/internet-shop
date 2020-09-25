@@ -84,15 +84,23 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         Long userId = sqlResult.getLong("user_id");
         List<Product> productList = new ArrayList<>();
         do {
-            Product product = parseProduct(sqlResult);
-            if (product != null) {
-                productList.add(parseProduct(sqlResult));
-            }
+            Optional<Product> product = parseProduct(sqlResult);
+            product.ifPresent(prod -> productList.add(product.get()));
         } while (sqlResult.next());
         return new ShoppingCart(id, userId, productList);
     }
 
-    private Product parseProduct(ResultSet sqlResult) throws SQLException {
+    private Optional<Product> parseProduct(ResultSet sqlResult) throws SQLException {
+        String name = sqlResult.getString("name");
+        if (name == null) {
+            return Optional.empty();
+        }
+        Long productId = sqlResult.getLong("product_id");
+        Double price = sqlResult.getDouble("price");
+        return Optional.of(new Product(productId, name, price));
+    }
+
+    /*private Product parseProduct(ResultSet sqlResult) throws SQLException {
         Long productId = sqlResult.getLong("product_id");
         String name = sqlResult.getString("name");
         Double price = sqlResult.getDouble("price");
@@ -100,15 +108,12 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             return null;
         }
         return new Product(productId, name, price);
-    }
+    }*/
 
     @Override
     public ShoppingCart update(ShoppingCart cart) {
-        String query = "DELETE FROM shopping_carts_products WHERE shopping_carts_id = ?";
         try (Connection connection = DbConnectionUtil.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setLong(1, cart.getId());
-            preparedStatement.executeUpdate();
+            deleteProductsFromCart(cart.getId(), connection);
             insertProducts(cart, connection);
         } catch (SQLException e) {
             throw new DataProcessingException(
@@ -133,22 +138,27 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     @Override
     public boolean delete(Long id) {
         String query = "UPDATE shopping_carts"
-                + " SET deleted = true "
+                + " SET deleted = TRUE "
                 + "WHERE shopping_cart_id = ?";
-        String query2 = "DELETE FROM shopping_carts_products"
-                + " WHERE shopping_carts_id = ?";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setLong(1, id);
             prepareStatement.executeUpdate();
-            prepareStatement = connection.prepareStatement(query2);
-            prepareStatement.setLong(1, id);
-            prepareStatement.executeUpdate();
+            deleteProductsFromCart(id, connection);
         } catch (SQLException e) {
             throw new DataProcessingException("Shopping cart with id =" + id
                     + " has not been deleted", e);
         }
         return true;
+    }
+
+    private void deleteProductsFromCart(Long id, Connection connection) throws SQLException {
+        String query = "DELETE FROM shopping_carts_products"
+                + " WHERE shopping_carts_id = ?";
+        PreparedStatement prepareStatement = connection.prepareStatement(query);
+        prepareStatement = connection.prepareStatement(query);
+        prepareStatement.setLong(1, id);
+        prepareStatement.executeUpdate();
     }
 
     @Override
@@ -187,7 +197,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         ResultSet resultSet = statement.executeQuery();
         List<Product> products = new ArrayList<>();
         while (resultSet.next()) {
-            products.add(parseProduct(resultSet));
+            Optional<Product> product = parseProduct(resultSet);
+            product.ifPresent(prod -> products.add(prod));
         }
         return products;
     }
