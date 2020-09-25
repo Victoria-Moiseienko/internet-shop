@@ -21,18 +21,17 @@ import java.util.Set;
 public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
-        String query = "SELECT *, group_concat(roles.role_name SEPARATOR ',') AS role_titles"
+        String query = "SELECT *, GROUP_CONCAT(roles.role_name SEPARATOR ',') AS role_titles"
                         + " FROM users"
                         + " JOIN users_roles ON users.user_id = users_roles.user_id"
                         + " JOIN roles ON users_roles.role_id = roles.role_id"
-                        + " where users.login = ?";
-
+                        + " WHERE users.login = ? AND users.deleted = FALSE";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, login);
             ResultSet sqlResult = preparedStatement.executeQuery();
             if (sqlResult.next()) {
-                User user = parseRow(sqlResult);
+                User user = parseUser(sqlResult);
                 return Optional.of(user);
             }
         } catch (SQLException e) {
@@ -45,7 +44,6 @@ public class UserDaoJdbcImpl implements UserDao {
     public User create(User user) {
         String query = "INSERT INTO users (user_name, password, login)"
                 + " VALUES (?, ?, ?)";
-
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -96,14 +94,14 @@ public class UserDaoJdbcImpl implements UserDao {
                         + " FROM users"
                         + " JOIN users_roles ON users.user_id = users_roles.user_id"
                         + " JOIN roles ON users_roles.role_id = roles.role_id"
-                        + " where users.user_id = ?";
+                        + " WHERE users.user_id = ?";
 
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
             ResultSet sqlResult = preparedStatement.executeQuery();
             if (sqlResult.next()) {
-                User user = parseRow(sqlResult);
+                User user = parseUser(sqlResult);
                 return Optional.of(user);
             }
         } catch (SQLException e) {
@@ -112,7 +110,7 @@ public class UserDaoJdbcImpl implements UserDao {
         return Optional.empty();
     }
 
-    private User parseRow(ResultSet sqlResult) throws SQLException {
+    private User parseUser(ResultSet sqlResult) throws SQLException {
         Long id = sqlResult.getLong("user_id");
         String name = sqlResult.getString("user_name");
         String login = sqlResult.getString("login");
@@ -130,7 +128,6 @@ public class UserDaoJdbcImpl implements UserDao {
         String query = "UPDATE users"
                 + " SET user_name = ?, password = ?, login = ? "
                 + " WHERE user_id = ?";
-
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setString(1, user.getName());
@@ -150,7 +147,6 @@ public class UserDaoJdbcImpl implements UserDao {
         String query = "UPDATE users"
                 + " SET deleted = true "
                 + " WHERE user_id = ?";
-
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setLong(1, id);
@@ -166,15 +162,15 @@ public class UserDaoJdbcImpl implements UserDao {
     public List<User> getAll() {
         String query = "SELECT *, roles.role_name AS role_titles"
                 + " FROM users"
-                + " JOIN users_roles ON users.user_id = users_roles.user_id"
-                + " JOIN roles ON users_roles.role_id = roles.role_id"
-                + " where users.deleted = false";
+                + " JOIN users_roles AS ur ON users.user_id = ur.user_id"
+                + " JOIN roles ON ur.role_id = roles.role_id"
+                + " WHERE users.deleted = FALSE";
         List<User> userList = new ArrayList<>();
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet sqlResult = preparedStatement.executeQuery();
             while (sqlResult.next()) {
-                userList.add(parseRow(sqlResult));
+                userList.add(parseUser(sqlResult));
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Users have not been selected", e);
