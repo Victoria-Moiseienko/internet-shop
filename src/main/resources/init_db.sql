@@ -142,3 +142,6 @@ ADD CONSTRAINT `user_id_fk`
   ALTER TABLE `internet_shop`.`orders`
 ADD COLUMN `deleted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `user_id`;
 
+ALTER TABLE `internet_shop`.`users`
+ADD COLUMN `salt` VARBINARY(16) NOT NULL AFTER `deleted`;
+

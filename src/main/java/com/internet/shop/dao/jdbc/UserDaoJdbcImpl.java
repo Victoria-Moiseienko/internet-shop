@@ -42,13 +42,14 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (user_name, password, login) VALUES (?, ?, ?)";
+        String query = "INSERT INTO users (user_name, password, login, salt) VALUES (?, ?, ?, ?)";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getLogin());
+            preparedStatement.setBytes(4, user.getSalt());
             preparedStatement.executeUpdate();
             ResultSet resultKey = preparedStatement.getGeneratedKeys();
             if (resultKey.next()) {
@@ -112,25 +113,27 @@ public class UserDaoJdbcImpl implements UserDao {
         String name = sqlResult.getString("user_name");
         String login = sqlResult.getString("login");
         String password = sqlResult.getString("password");
+        byte[] salt = sqlResult.getBytes("salt");
         String[] rolesStringArr = sqlResult.getString("role_titles").split(",");
         Set<Role> roles = new HashSet();
         for (String str : rolesStringArr) {
             roles.add(Role.of(str));
         }
-        return new User(id, name, login, password, roles);
+        return new User(id, name, login, password, salt, roles);
     }
 
     @Override
     public User update(User user) {
         String query = "UPDATE users"
-                + " SET user_name = ?, password = ?, login = ? "
+                + " SET user_name = ?, password = ?, login = ?, salt = ? "
                 + " WHERE user_id = ?";
         try (Connection connection = DbConnectionUtil.getConnection()) {
             PreparedStatement prepareStatement = connection.prepareStatement(query);
             prepareStatement.setString(1, user.getName());
             prepareStatement.setString(2, user.getPassword());
             prepareStatement.setString(3, user.getLogin());
-            prepareStatement.setLong(4, user.getId());
+            prepareStatement.setBytes(4, user.getSalt());
+            prepareStatement.setLong(5, user.getId());
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DataProcessingException("User with id " + user.getId()
