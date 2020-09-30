@@ -18,7 +18,7 @@ public class DbConnectionUtil {
     public static Connection getConnection() throws SQLException {
         Properties connectionProps = new Properties();
         connectionProps.put("user", "root");
-        connectionProps.put("password", "********");
+        connectionProps.put("password", "Vi4ft5q7Ktrr9T6toPcN");
         String url = "jdbc:mysql://localhost:3306/internet_shop?serverTimezone=UTC";
 
         try {
