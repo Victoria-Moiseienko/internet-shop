@@ -23,6 +23,7 @@ DROP INDEX `product_name_UNIQUE` ;
 CREATE TABLE `internet_shop`.`orders` (
   `order_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(11) NULL,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`order_id`),
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
   INDEX `orders_users_fk_idx` (`user_id` ASC) VISIBLE,
@@ -113,14 +114,15 @@ CREATE TABLE `internet_shop`.`users` (
   `user_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(225) NOT NULL,
   `password` VARCHAR(225) NOT NULL,
+  `login` VARCHAR(225) NOT NULL,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
+  `salt` VARBINARY(16) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 ALTER TABLE `internet_shop`.`users`
-ADD COLUMN `login` VARCHAR(225) NOT NULL AFTER `password`,
-ADD COLUMN `deleted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `login`,
 CHANGE COLUMN `user_name` `user_name` VARCHAR(225) NULL ,
 ADD UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
 DROP INDEX `user_name_UNIQUE` ;
@@ -138,10 +140,3 @@ ADD CONSTRAINT `role_id_fk`
 ADD CONSTRAINT `user_id_fk`
   FOREIGN KEY (`user_id`)
   REFERENCES `internet_shop`.`users` (`user_id`);
-
-  ALTER TABLE `internet_shop`.`orders`
-ADD COLUMN `deleted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `user_id`;
-
-ALTER TABLE `internet_shop`.`users`
-ADD COLUMN `salt` VARBINARY(16) NOT NULL AFTER `deleted`;
-
