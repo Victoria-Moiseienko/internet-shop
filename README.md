@@ -1,29 +1,39 @@
 
 ##internet-shop
-Internet-shop with basic functions. 
-According to N-tier architecture project contain several layers:
+Internet-shop with basic functions.
+ 
+In accordance with the N-tier architecture principles, this project is comprised of several layers:
 * DB
 * DAO
 * Services
 * Controllers
 * Views
 ##main functions
-###for Admin: 
-* Manage products
-* Manage users
-* View and delete orders
-###for User:
+###for the Admin: 
+(login: admin, password: admin)
+* Managing products
+* Managing users
+* Viewing and deleting orders
+###for the User:
 * Registration
 * Login/Logout
-* Buy products
-* View Shopping Cart
-* Create orders
-* View own orders and its details
+* Buying products
+* Viewing the shopping cart
+* Completing orders
+* Viewing own orders and their details
 ##technologies 
-Java, Servlets, RBAC Filters, Tomcat, JSP, JSTL, JDBC, MySQL
+* Java 8 
+* Servlets
+* RBAC Filters
+* Tomcat
+* JSP
+* JSTL
+* JDBC
+* MySQL
+* Maven
  
-##to run project
-1. Set up MySql DB and Workbench
-2. Run the sql-code from init_db.sql - placed in 'resources' package
-3. Use your properties in ConnectionUtil class
+##to run the project
+1. Set up MySql DB and Workbench on your machine
+2. Run the SQL-code from the _init_db.sql_ file located in the _resources_ package
+3. Insert your MySQL Workbench login and password in the properties in the ConnectionUtil class
 4. Configure Tomcat
